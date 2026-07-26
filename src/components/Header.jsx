@@ -1,5 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth.jsx'
+import isotype from '../assets/isotype.svg'
 
 const links = [
   { to: '/stock', label: 'Stock' },
@@ -14,7 +15,10 @@ export default function Header() {
 
   return (
     <header className="header">
-      <span className="header__brand">Tornería</span>
+      <span className="header__brand">
+        <img src={isotype} alt="" width="28" height="28" />
+        Tornería Nano
+      </span>
       <nav className="header__nav">
         {links.map((link) => (
           <NavLink key={link.to} to={link.to}>

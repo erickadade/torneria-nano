@@ -1,0 +1,13 @@
+:root{
+--color-primary-50:#fbede6;--color-primary-100:#f5d7c5;--color-primary-200:#e9b28e;--color-primary-300:#dc8d5c;--color-primary-400:#ce6c39;--color-primary-500:#bb4c1f;--color-primary-600:#a13f17;--color-primary-700:#833312;--color-primary-800:#65280e;--color-primary-900:#451a09;
+--color-steel-50:#f4f5f5;--color-steel-100:#e7e9e9;--color-steel-200:#d3d6d6;--color-steel-300:#b9bdbe;--color-steel-400:#9fa4a5;--color-steel-500:#82888a;--color-steel-600:#686f71;--color-steel-700:#4f5556;--color-steel-800:#383d3e;--color-steel-900:#232728;
+--gray-0:#faf9f7;--gray-50:#f5f3f1;--gray-100:#ede9e6;--gray-200:#ddd7d1;--gray-300:#c7bfb7;--gray-400:#a89e93;--gray-500:#8a8073;--gray-600:#6a6155;--gray-700:#4f473d;--gray-800:#332e27;--gray-900:#201c17;
+--color-success-50:#e7f5ec;--color-success-500:#2e7d4f;--color-success-600:#236a41;
+--color-warning-50:#fbf2dc;--color-warning-500:#b8860f;--color-warning-600:#96700c;
+--color-error-50:#fbe9e8;--color-error-500:#c23b3b;--color-error-600:#a12e2e;
+--color-info-50:#e8f1f5;--color-info-500:#3b7ea1;--color-info-600:#2f6883;
+--surface-page:var(--gray-0);--surface-card:#ffffff;--surface-sunken:var(--gray-50);--surface-inverse:var(--gray-900);
+--border-default:var(--gray-200);--border-strong:var(--gray-300);--border-focus:var(--color-primary-500);
+--text-primary:var(--gray-900);--text-secondary:var(--gray-600);--text-muted:var(--gray-500);--text-on-primary:#ffffff;--text-on-inverse:var(--gray-50);--text-link:var(--color-primary-600);--text-link-hover:var(--color-primary-700);
+--brand-primary:var(--color-primary-500);--brand-primary-hover:var(--color-primary-600);--brand-primary-active:var(--color-primary-700);--brand-secondary:var(--color-steel-500);
+}

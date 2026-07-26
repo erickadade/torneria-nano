@@ -4,21 +4,27 @@
 
 body {
   margin: 0;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-family);
+  background: var(--surface-page);
+  color: var(--text-primary);
+  font: var(--text-body-md);
 }
 
 main {
-  padding: var(--spacing-lg);
+  padding: var(--space-6);
 }
 
 h1, h2, h3 {
-  margin: 0 0 var(--spacing-md);
+  margin: 0 0 var(--space-4);
+  font-family: var(--font-display);
+  font-weight: 600;
 }
 
 a {
-  color: var(--color-primary);
+  color: var(--text-link);
+}
+
+a:hover {
+  color: var(--text-link-hover);
 }
 
 button {
