@@ -1,0 +1,27 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+main {
+  padding: var(--spacing-lg);
+}
+
+h1, h2, h3 {
+  margin: 0 0 var(--spacing-md);
+}
+
+a {
+  color: var(--color-primary);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+}

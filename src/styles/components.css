@@ -1,0 +1,64 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header__brand {
+  font-weight: 700;
+}
+
+.header__nav {
+  display: flex;
+  gap: var(--spacing-md);
+  flex: 1;
+}
+
+.header__nav a {
+  text-decoration: none;
+  color: var(--color-text-muted);
+}
+
+.header__nav a.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.view {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.view--login {
+  max-width: 320px;
+  margin-top: var(--spacing-xl);
+}
+
+.view--login form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.view--login input {
+  padding: var(--spacing-sm);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.view--login button {
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.error {
+  color: var(--color-error);
+  margin: 0;
+}
