@@ -52,7 +52,7 @@ Notas:
 
 ```
 src/
-  views/         # Stock, Proveedores, Servicios, Clientes, Presupuestos, Login
+  views/         # Home, Stock, Proveedores, Servicios, Clientes, Presupuestos, Facturas, Login
   components/    # Header, ProductoCard, PresupuestoForm, LineaItem, Modal, ProtectedRoute
   styles/        # tokens.css, global.css, components.css
   lib/           # firebase.js

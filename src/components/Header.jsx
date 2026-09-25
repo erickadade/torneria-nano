@@ -4,12 +4,13 @@ import { useAuth } from '../hooks/useAuth.jsx'
 import isotype from '../assets/isotype.svg'
 
 const links = [
-  { to: '/stock', label: 'Stock' },
-  { to: '/proveedores', label: 'Proveedores' },
-  { to: '/servicios', label: 'Servicios' },
-  { to: '/clientes', label: 'Clientes' },
+  { to: '/', label: 'Inicio', end: true },
   { to: '/presupuestos', label: 'Presupuestos' },
+  { to: '/stock', label: 'Stock' },
   { to: '/facturas', label: 'Facturas' },
+  { to: '/clientes', label: 'Clientes' },
+  { to: '/servicios', label: 'Servicios' },
+  { to: '/proveedores', label: 'Proveedores' },
 ]
 
 export default function Header() {
@@ -40,7 +41,7 @@ export default function Header() {
 
         <nav className="header__nav header__nav--desktop">
           {links.map((link) => (
-            <NavLink key={link.to} to={link.to}>
+            <NavLink key={link.to} to={link.to} end={link.end}>
               {link.label}
             </NavLink>
           ))}
@@ -54,7 +55,7 @@ export default function Header() {
       {isMenuOpen && (
         <nav className="header__nav header__nav--mobile">
           {links.map((link) => (
-            <NavLink key={link.to} to={link.to} onClick={closeMenu}>
+            <NavLink key={link.to} to={link.to} end={link.end} onClick={closeMenu}>
               {link.label}
             </NavLink>
           ))}
