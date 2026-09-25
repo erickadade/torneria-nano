@@ -33,7 +33,7 @@ El registro de facturas y cobros del sistema (número, cliente, medio de pago, e
 |---|---|
 | `productos` | codigo, codigoBarras, descripcion, stockActual, stockMinimo, recargoPorcentaje, proveedores: [{ proveedorId, precioCosto, ultimaCompra }] |
 | `proveedores` | nombre, cuit, contacto |
-| `servicios` | descripcion, precio, categoria (opcional) — catálogo independiente de `productos`, no afecta stock |
+| `servicios` | codigo (correlativo autogenerado), descripcion, precio, categoria (opcional) — catálogo independiente de `productos`, no afecta stock |
 | `clientes` | nombreRazonSocial, cuitODni, condicionIva, email, telefono |
 | `presupuestos` | numero, fechaEmision, validoHasta, clienteId, trabajoEquipo, lineas: [{ tipo: "repuesto"\|"servicio", ... }], subtotal, iva, total, estado: "borrador"\|"aprobado"\|"facturado" |
 | `facturas` | numero, fechaEmision, presupuestoId (opcional — si viene de un presupuesto aprobado), clienteId, lineas (copiadas del presupuesto o cargadas directo), total, medioPago: "efectivo"\|"cheque"\|"cheque_digital"\|"debito"\|"tarjeta_credito", fechaCobro (solo si medioPago es cheque o cheque_digital), estadoPago: "pendiente"\|"cobrado". *Campos de emisión ARCA (facturadoArca, tipoComprobante, cae, pdfUrl) quedan para la fase futura.* |

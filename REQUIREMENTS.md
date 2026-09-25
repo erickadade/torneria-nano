@@ -44,9 +44,11 @@ proveedor: {
 }
 
 servicio: {
-  id, descripcion, precio, categoria (opcional)
+  id, codigo (correlativo autogenerado),
+  descripcion, precio, categoria (opcional)
 }
 // Catálogo independiente del de productos
+// codigo sirve para referenciar el servicio en presupuestos/facturas, no para escaneo
 
 cliente: {
   id, nombreRazonSocial, cuitODni,
