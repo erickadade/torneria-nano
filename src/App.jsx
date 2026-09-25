@@ -8,6 +8,7 @@ import Proveedores from './views/Proveedores.jsx'
 import Servicios from './views/Servicios.jsx'
 import Clientes from './views/Clientes.jsx'
 import Presupuestos from './views/Presupuestos.jsx'
+import Facturas from './views/Facturas.jsx'
 
 function AppLayout({ children }) {
   const { user } = useAuth()
@@ -61,6 +62,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Presupuestos />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/facturas"
+          element={
+            <ProtectedRoute>
+              <Facturas />
             </ProtectedRoute>
           }
         />

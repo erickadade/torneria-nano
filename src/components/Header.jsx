@@ -9,6 +9,7 @@ const links = [
   { to: '/servicios', label: 'Servicios' },
   { to: '/clientes', label: 'Clientes' },
   { to: '/presupuestos', label: 'Presupuestos' },
+  { to: '/facturas', label: 'Facturas' },
 ]
 
 export default function Header() {
