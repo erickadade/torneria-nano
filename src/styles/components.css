@@ -521,7 +521,7 @@
   text-align: right;
 }
 
-/* Select de estado inline en la tabla de presupuestos */
+/* Select de estado inline en la tabla de presupuestos y facturas */
 
 .table select {
   height: var(--control-h-sm);
@@ -531,4 +531,31 @@
   background: var(--surface-card);
   font: var(--text-body-sm);
   color: var(--text-primary);
+}
+
+/* Selector de origen y resumen dentro del formulario de factura */
+
+.origen-toggle {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.origen-toggle label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-body-md);
+  color: var(--text-primary);
+}
+
+.factura-resumen {
+  padding: var(--space-3);
+  background: var(--surface-sunken);
+  border-radius: var(--radius-sm);
+}
+
+.factura-resumen p {
+  margin: 0;
+  font: var(--text-body-sm);
+  color: var(--text-secondary);
 }
