@@ -152,37 +152,43 @@ export default function Clientes() {
       ) : filteredClientes.length === 0 ? (
         <p>No hay clientes cargados.</p>
       ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Nombre / Razón social</th>
-              <th>CUIT / DNI</th>
-              <th>Condición IVA</th>
-              <th>Email</th>
-              <th>Teléfono</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredClientes.map((cliente) => (
-              <tr key={cliente.id}>
-                <td>{cliente.nombreRazonSocial}</td>
-                <td>{cliente.cuitODni}</td>
-                <td>{cliente.condicionIva}</td>
-                <td>{cliente.email}</td>
-                <td>{cliente.telefono || '—'}</td>
-                <td className="table__actions">
-                  <button type="button" className="btn btn--ghost" onClick={() => openEditModal(cliente)}>
-                    Editar
-                  </button>
-                  <button type="button" className="btn btn--ghost btn--danger" onClick={() => handleDelete(cliente)}>
-                    Eliminar
-                  </button>
-                </td>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>Nombre / Razón social</th>
+                <th>CUIT / DNI</th>
+                <th>Condición IVA</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th></th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {filteredClientes.map((cliente) => (
+                <tr key={cliente.id}>
+                  <td>{cliente.nombreRazonSocial}</td>
+                  <td>{cliente.cuitODni}</td>
+                  <td>{cliente.condicionIva}</td>
+                  <td>{cliente.email}</td>
+                  <td>{cliente.telefono || '—'}</td>
+                  <td className="table__actions">
+                    <button type="button" className="btn btn--ghost" onClick={() => openEditModal(cliente)}>
+                      Editar
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn--ghost btn--danger"
+                      onClick={() => handleDelete(cliente)}
+                    >
+                      Eliminar
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       )}
 
       {isModalOpen && (
