@@ -1,4 +1,4 @@
-# 1 - ABM de Productos/Stock con múltiples proveedores
+# 3 - ABM de Productos/Stock con múltiples proveedores
 
 ## Problema
 
@@ -32,19 +32,21 @@ Que Vale pueda dar de alta, listar, editar y eliminar productos desde la vista d
     ]
   }
   ```
+  `codigo` y `codigoBarras` se cargan manualmente (a diferencia del `codigo` autogenerado de `servicios` del issue #2) — son datos físicos del repuesto (código interno o de fabricante), no un correlativo del sistema. Vale suele reutilizar directamente el código que ya trae la pieza del proveedor (etiqueta/factura) en vez de inventar uno propio — no hace falta ninguna lógica especial para esto, es simplemente lo que va a tipear en el campo `codigo`.
 - Colección `proveedores` en Firestore con la forma:
   ```
   proveedor: { id, nombre, cuit, contacto }
   ```
-- Listado de productos en `Stock.jsx`: tabla con código, descripción, stock actual, stock mínimo y precio final calculado (usando el proveedor de menor `precioCosto` cuando hay más de uno).
-- Formulario de alta de producto (modal, usando el componente `Modal` que indica `CLAUDE.md` en `components/`) con: código, código de barras (opcional), descripción, stock actual, stock mínimo, % recargo, y al menos un proveedor con su costo.
+- Listado de productos en `Stock.jsx`: tabla (usando el patrón `table-scroll` / `table` de `src/styles/components.css`, ya usado en `Clientes.jsx` y `Servicios.jsx`) con código, descripción, stock actual, stock mínimo y precio final calculado (usando el proveedor de menor `precioCosto` cuando hay más de uno).
+- Formulario de alta de producto (modal, reutilizando el componente `Modal` de `src/components/Modal.jsx` tal cual está) con: código (obligatorio), código de barras (opcional), descripción (obligatoria), stock actual, stock mínimo, % recargo, y al menos un proveedor con su costo.
 - Poder agregar más de un proveedor al mismo producto desde el formulario (agregar/quitar filas de proveedor + costo), no una relación 1 a 1.
 - Selector de proveedor dentro del formulario: si no hay proveedores cargados aún, permitir crear uno rápido (nombre obligatorio, CUIT y contacto opcionales) sin salir del flujo de alta de producto.
 - Cálculo automático del precio final: `precioCosto * (1 + recargoPorcentaje / 100)`, usando el costo del proveedor más barato cuando el producto tiene varios.
 - Edición de producto existente (mismos campos que el alta, incluyendo editar/agregar/quitar proveedores).
-- Eliminación de producto con confirmación (usar patrón de confirmación existente en el proyecto si ya hay uno, o un `window.confirm` simple si no).
+- Eliminación de producto con confirmación (`window.confirm`, mismo patrón que `Clientes.jsx` y `Servicios.jsx`).
 - Vista protegida por `ProtectedRoute` (ya aplica a nivel de ruta en `App.jsx`, verificar que no se rompe).
-- Usar los tokens de `src/styles/tokens.css` para colores, tipografía y espaciado — nada de hex codes hardcodeados.
+- Usar los tokens de `src/styles/tokens.css` para colores, tipografía y espaciado, y reutilizar las clases ya creadas en `src/styles/components.css` (`.table`, `.table-scroll`, `.btn`, `.form`, `.search-input`, `.view__header`, etc.) en vez de duplicar estilos — nada de hex codes hardcodeados.
+- Formatear costos y precios en pesos con separador de miles `.` y decimal `,` (es-AR), igual que en `Servicios.jsx`.
 
 ### P1 (deseable)
 
@@ -60,13 +62,15 @@ Que Vale pueda dar de alta, listar, editar y eliminar productos desde la vista d
 - [ ] Se puede eliminar un producto y desaparece del listado.
 - [ ] Se puede crear un proveedor nuevo desde el formulario de producto sin salir del flujo.
 - [ ] El listado de productos se actualiza en tiempo real (o al menos al recargar) reflejando altas, ediciones y bajas.
-- [ ] La vista respeta los estilos definidos en `tokens.css` (sin colores hardcodeados nuevos).
+- [ ] Los montos se muestran formateados en pesos (es-AR).
+- [ ] La vista respeta los estilos definidos en `tokens.css` y reutiliza las clases de `components.css` (sin colores hardcodeados nuevos).
 - [ ] Si se intenta acceder a `/stock` sin estar logueada, redirige a Login (comportamiento ya cubierto por `ProtectedRoute`, solo verificar que sigue funcionando).
 
 ## Notas para la IA
 
-- Archivos principales a tocar: `src/views/Stock.jsx`, `src/lib/firebase.js` (si hace falta agregar helpers de Firestore), y crear `src/components/ProductoCard.jsx` o el componente de fila/formulario que corresponda según lo que ya sugiere la estructura de `CLAUDE.md` (`components/ProductoCard.jsx`).
-- Si hace falta un componente `Modal` genérico y todavía no existe en `src/components/`, crearlo ahí (`CLAUDE.md` ya lo prevé como parte de la estructura del proyecto).
+- Archivo principal a tocar: `src/views/Stock.jsx`. Seguir la misma estructura que `src/views/Clientes.jsx` y `src/views/Servicios.jsx` (issues #1 y #2, ya implementados): `onSnapshot` para el listado en tiempo real, modal de alta/edición con `useState` de formulario, validación antes de guardar, `deleteDoc` con confirmación.
+- Reutilizar `src/components/Modal.jsx` tal cual está, no crear un modal nuevo.
+- El array `proveedores` dentro del formulario necesita su propio estado local (lista de filas `{ proveedorId, precioCosto }`, con `ultimaCompra` seteado a la fecha de guardado) — puede vivir como estado dentro de `Stock.jsx`, no hace falta un componente separado a menos que simplifique la implementación.
 - Respetar el modelo multi-proveedor: nunca simplificar `proveedores` a un solo campo `proveedorId`/`precioCosto` plano en el producto.
 - No crear Cloud Functions ni agregar dependencias de Afip SDK / Claude API — la importación de facturas de proveedor queda fuera de este issue.
 - Sin TypeScript — todo en JavaScript plano, igual que el resto del proyecto.
