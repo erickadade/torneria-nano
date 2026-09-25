@@ -2,7 +2,7 @@
 
 ## Contexto
 
-Sistema de gestión para una tornería que vende repuestos y presta servicios (torneado, reparaciones, etc.). Permite manejar stock, armar presupuestos combinando repuestos y mano de obra, y facturar electrónicamente conectando con ARCA (ex AFIP).
+Sistema de gestión para una tornería que vende repuestos y presta servicios (torneado, reparaciones, etc.). Permite manejar stock, armar presupuestos combinando repuestos y mano de obra, registrar facturas y cobros (con control de medio de pago), y —en una fase futura— facturar electrónicamente conectando con ARCA (ex AFIP).
 
 Es un sistema independiente, de uso exclusivo para este negocio (no multi-tenant).
 
@@ -23,7 +23,7 @@ Es un sistema independiente, de uso exclusivo para este negocio (no multi-tenant
 
 ## Pendiente de definir
 
-- **Condición frente al IVA de la tornería** (monotributista vs responsable inscripto) — bloquea el desarrollo del módulo de Facturación (define tipo de comprobante a emitir y si se discrimina IVA). No bloquea Stock, Clientes, Servicios ni Presupuestos.
+- **Condición frente al IVA de la tornería** (monotributista vs responsable inscripto) — bloquea únicamente la **emisión electrónica vía ARCA** (define tipo de comprobante a emitir y si se discrimina IVA). No bloquea Stock, Clientes, Servicios, Presupuestos ni el registro interno de facturas/cobros (ver funcionalidad 5).
 
 ---
 
@@ -65,8 +65,17 @@ presupuesto: {
 }
 
 factura: {
-  id, presupuestoId, tipoComprobante,
-  cae, fechaEmision, pdfUrl
+  id, numero, fechaEmision,
+  presupuestoId (opcional — si viene de un presupuesto),
+  clienteId,
+  lineas (copiadas del presupuesto si aplica, o cargadas directo si no),
+  total,
+  medioPago: "efectivo" | "cheque" | "cheque_digital" | "debito" | "tarjeta_credito",
+  fechaCobro (solo si medioPago = cheque o cheque_digital — fecha en que se hace efectivo),
+  estadoPago: "pendiente" | "cobrado",
+  // Emisión ARCA (fase futura, ver funcionalidad 10):
+  facturadoArca: boolean,
+  tipoComprobante, cae, pdfUrl
 }
 ```
 
@@ -97,10 +106,14 @@ factura: {
    - Cálculo de subtotal, IVA (pendiente de definición fiscal) y total
    - Estados: borrador → aprobado → facturado
 
-5. **Facturación (ARCA vía Afip SDK)**
-   - Conversión de presupuesto aprobado a factura real
-   - Emisión vía Afip SDK: obtiene CAE, genera PDF y QR
-   - *Bloqueado hasta definir condición de IVA de la tornería*
+5. **Registro de facturas y cobros (interno, sin ARCA)**
+   - Al crear una factura, primero se elige si parte de un presupuesto existente o no:
+     - **Con presupuesto**: se selecciona de una lista (de los aprobados) y sus líneas se copian automáticamente a la factura, sin necesidad de recargar ítems
+     - **Sin presupuesto**: se carga directo cliente + detalle + total
+   - Cada factura registra: **medio de pago** (efectivo, cheque, cheque digital, débito, tarjeta de crédito) y **estado de pago** (pendiente / cobrado)
+   - Si el medio de pago es cheque o cheque digital, se carga la **fecha de cobro** (fecha en que el cheque se hace efectivo)
+   - Este registro es independiente de la emisión electrónica ante ARCA (ver funcionalidad 10) — sirve para llevar el control interno de qué se facturó y qué falta cobrar, aunque todavía no se esté emitiendo el comprobante fiscal
+   - *No bloqueado por la condición de IVA — se puede desarrollar ya*
 
 ### P1 — Uso diario
 
@@ -122,6 +135,12 @@ factura: {
    - Generación de etiqueta (código + descripción + precio) desde el sistema, usando librería tipo `JsBarcode`
    - Impresión vía navegador, compatible con impresora térmica o común
    - Selección múltiple de productos para impresión en lote
+
+### Fase futura — fuera del alcance actual
+
+10. **Emisión electrónica ante ARCA (vía Afip SDK)**
+    - Conecta el registro interno de facturas (funcionalidad 5) con la emisión real: obtiene CAE, genera PDF y QR
+    - *Bloqueado hasta definir condición de IVA de la tornería (monotributista vs responsable inscripto) y hasta sumar Cloud Functions (ver CLAUDE.md)*
 
 ---
 
