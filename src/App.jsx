@@ -3,6 +3,7 @@ import Header from './components/Header.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
 import { useAuth } from './hooks/useAuth.jsx'
 import Login from './views/Login.jsx'
+import Home from './views/Home.jsx'
 import Stock from './views/Stock.jsx'
 import Proveedores from './views/Proveedores.jsx'
 import Servicios from './views/Servicios.jsx'
@@ -25,6 +26,14 @@ export default function App() {
     <AppLayout>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/stock"
           element={
@@ -73,8 +82,7 @@ export default function App() {
             </ProtectedRoute>
           }
         />
-        <Route path="/" element={<Navigate to="/stock" replace />} />
-        <Route path="*" element={<Navigate to="/stock" replace />} />
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </AppLayout>
   )

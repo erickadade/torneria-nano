@@ -14,7 +14,7 @@ export default function Login() {
     setError('')
     try {
       await login(email, password)
-      navigate('/stock')
+      navigate('/')
     } catch {
       setError('Email o contraseña incorrectos')
     }
